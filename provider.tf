@@ -21,7 +21,7 @@ terraform {
 		organization = "ejejosh"
 
 		workspaces {
-			name = "AWSEKS"
+			name = "joshproject"
 		}
 	}
 }
