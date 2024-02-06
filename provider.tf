@@ -15,7 +15,7 @@ terraform {
       version = ">= 2.0.1"
     }
   }
-
+/*
   backend "remote" {
 		hostname = "app.terraform.io"
 		organization = "ejejosh"
@@ -24,6 +24,14 @@ terraform {
 			name = "joshproject"
 		}
 	}
+*/
+  cloud {
+    organization = "ejejosh"
+
+    workspaces {
+      name = "joshproject"
+    }
+  }
 }
 
 data "aws_eks_cluster" "cluster" {
