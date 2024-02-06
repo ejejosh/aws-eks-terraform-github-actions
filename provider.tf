@@ -21,7 +21,7 @@ terraform {
 		organization = "ejejosh"
 
 		workspaces {
-			name = "joshproject"
+			name = "joshproject1"
 		}
 	}
 */
@@ -29,7 +29,7 @@ terraform {
     organization = "ejejosh"
 
     workspaces {
-      name = "joshproject"
+      name = "joshproject1"
     }
   }
 }

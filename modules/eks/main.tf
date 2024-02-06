@@ -1,6 +1,6 @@
-resource "aws_eks_cluster" "joshproject" {
+resource "aws_eks_cluster" "joshproject1" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.joshproject.arn
+  role_arn = aws_iam_role.joshproject1.arn
 
   vpc_config {
     subnet_ids              = var.aws_public_subnet
@@ -11,15 +11,15 @@ resource "aws_eks_cluster" "joshproject" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.joshproject-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.joshproject-AmazonEKSVPCResourceController,
+    aws_iam_role_policy_attachment.joshproject1-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.joshproject1-AmazonEKSVPCResourceController,
   ]
 }
 
-resource "aws_eks_node_group" "joshproject" {
-  cluster_name    = aws_eks_cluster.joshproject.name
+resource "aws_eks_node_group" "joshproject1" {
+  cluster_name    = aws_eks_cluster.joshproject1.name
   node_group_name = var.node_group_name
-  node_role_arn   = aws_iam_role.joshproject2.arn
+  node_role_arn   = aws_iam_role.joshproject12.arn
   subnet_ids      = var.aws_public_subnet
   instance_types  = var.instance_types
 
@@ -35,9 +35,9 @@ resource "aws_eks_node_group" "joshproject" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.joshproject-AmazonEKSWorkerNodePolicy,
-    aws_iam_role_policy_attachment.joshproject-AmazonEKS_CNI_Policy,
-    aws_iam_role_policy_attachment.joshproject-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.joshproject1-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.joshproject1-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.joshproject1-AmazonEC2ContainerRegistryReadOnly,
   ]
 }
 
@@ -60,8 +60,8 @@ resource "aws_security_group" "node_group_one" {
   }
 }
 
-resource "aws_iam_role" "joshproject" {
-  name = "eks-cluster-joshproject"
+resource "aws_iam_role" "joshproject1" {
+  name = "eks-cluster-joshproject1"
 
   assume_role_policy = <<POLICY
 {
@@ -79,20 +79,20 @@ resource "aws_iam_role" "joshproject" {
 POLICY
 }
 
-resource "aws_iam_role_policy_attachment" "joshproject-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "joshproject1-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.joshproject.name
+  role       = aws_iam_role.joshproject1.name
 }
 
 # Optionally, enable Security Groups for Pods
 # Reference: https://docs.aws.amazon.com/eks/latest/userguide/security-groups-for-pods.html
-resource "aws_iam_role_policy_attachment" "joshproject-AmazonEKSVPCResourceController" {
+resource "aws_iam_role_policy_attachment" "joshproject1-AmazonEKSVPCResourceController" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
-  role       = aws_iam_role.joshproject.name
+  role       = aws_iam_role.joshproject1.name
 }
 
-resource "aws_iam_role" "joshproject2" {
-  name = "eks-node-group-joshproject"
+resource "aws_iam_role" "joshproject12" {
+  name = "eks-node-group-joshproject1"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -106,17 +106,17 @@ resource "aws_iam_role" "joshproject2" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "joshproject-AmazonEKSWorkerNodePolicy" {
+resource "aws_iam_role_policy_attachment" "joshproject1-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.joshproject2.name
+  role       = aws_iam_role.joshproject12.name
 }
 
-resource "aws_iam_role_policy_attachment" "joshproject-AmazonEKS_CNI_Policy" {
+resource "aws_iam_role_policy_attachment" "joshproject1-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.joshproject2.name
+  role       = aws_iam_role.joshproject12.name
 }
 
-resource "aws_iam_role_policy_attachment" "joshproject-AmazonEC2ContainerRegistryReadOnly" {
+resource "aws_iam_role_policy_attachment" "joshproject1-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.joshproject2.name
+  role       = aws_iam_role.joshproject12.name
 }
